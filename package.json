@@ -1,5 +1,5 @@
 {
-  "name": "trie-data-structure",
+  "name": "trie-dsa",
   "version": "0.0.1",
   "description": "Library to implement tries in javascript and typescript",
   "main": "dist/index.js",
