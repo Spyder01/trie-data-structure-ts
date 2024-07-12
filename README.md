@@ -7,7 +7,7 @@ This TypeScript library provides a trie (prefix tree) implementation with variou
 Install the library using npm:
 
 ```bash
-npm install trie
+npm install trie-dsa
 ```
 
 ## Usage
@@ -151,4 +151,5 @@ The trie data structure provides efficient operations for storing and retrieving
 This library is licensed under the MIT License. See the LICENSE file for more details.
 
 ## Contributions.
+
 Contributions are welcome! Please fork the repository and submit a pull request.
