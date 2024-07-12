@@ -1,6 +1,6 @@
 {
   "name": "trie-dsa",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Library to implement tries in javascript and typescript",
   "main": "dist/index.js",
   "scripts": {
