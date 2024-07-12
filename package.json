@@ -1,0 +1,27 @@
+{
+  "name": "trie-data-structure",
+  "version": "0.0.1",
+  "description": "Library to implement tries in javascript and typescript",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "test": "jest"
+  },
+  "keywords": [
+    "trie",
+    "dsa",
+    "data-structures",
+    "tree",
+    "graph",
+    "javascript",
+    "typescript"
+  ],
+  "author": "Suhan",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/jest": "^29.5.12",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.2.2",
+    "typescript": "^5.5.3"
+  }
+}
