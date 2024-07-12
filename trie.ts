@@ -15,7 +15,7 @@ export function constructTrieNode<T extends TrieKeyType, K>(nodeArray: Array<T>,
   let trie: Trie<T, K> = { [nodeArray[depth - 1]]: terminator } as Trie<T, K>;
 
   for (let i = depth - 2; i >= 0; i--) {
-    trie = { [nodeArray[i]]: trie } as Trie<T, K>;
+    trie = { [nodeArray[i]]: { ...trie } } as Trie<T, K>;
   }
 
   return trie;
@@ -67,7 +67,7 @@ export function trieHasKey<T extends TrieKeyType, K>(trie: Trie<T, K>, key: T[])
 }
 
 export function trieGetValue<T extends TrieKeyType, K>(trie: Trie<T, K>, key: T[]): K | undefined {
-  let current: any = trie;
+  let current: any = { ...trie };
   for (const k of key) {
     if (current[k] === undefined) {
       return undefined;
@@ -77,26 +77,36 @@ export function trieGetValue<T extends TrieKeyType, K>(trie: Trie<T, K>, key: T[
   return current as K;
 }
 
-export function trieDeleteKey<T extends TrieKeyType, K>(trie: Trie<T, K>, key: T[]): void {
+export function trieDeleteKey<T extends TrieKeyType, K>(trie: Trie<T, K>, key: Array<T>): Trie<T, K> {
   if (key.length === 0) {
-    return;
+    return { ...trie };
   }
 
-  const lastKey = key[key.length - 1];
-  let current: any = trie;
+  let current: any = { ...trie };
+  let parent: any = null;
+  let currentKey: T | undefined = undefined;
 
-  for (let i = 0; i < key.length - 1; i++) {
-    const k = key[i];
+  for (const k of key) {
     if (current[k] === undefined) {
-      return; // Key path does not exist
+      return { ...trie };
     }
+    parent = current;
+    currentKey = k;
     current = current[k];
   }
 
-  delete current[lastKey];
+  if (parent && currentKey !== undefined) {
+    const updatedParent = { ...parent };
+    delete updatedParent[currentKey];
+    return updatedParent;
+  }
+
+  return { ...trie }; 
 }
 
-export function traverseTrie<T extends TrieKeyType, K>(trie: Trie<T, K>, callback: (key: T[], value: K | Trie<T, K>) => void, key: T[] = []): void {
+export function traverseTrie<T extends TrieKeyType, K>(original_trie: Trie<T, K>, callback: (key: T[], value: K | Trie<T, K>) => void, key: T[] = []): void {
+  const trie = { ...original_trie };
+
   for (const k in trie) {
     if (trie.hasOwnProperty(k)) {
       const newKey = [...key, k as T];
@@ -109,4 +119,13 @@ export function traverseTrie<T extends TrieKeyType, K>(trie: Trie<T, K>, callbac
   }
 }
 
-
+export function findNodefromPath<T extends TrieKeyType, K>(trie: Trie<T, K>, path: Array<T>): Trie<T, K> | undefined {
+  let current: any = { ...trie };
+  for (const key of path) {
+    if (current[key] === undefined) {
+      return undefined;
+    }
+    current = current[key];
+  }
+  return current as Trie<T, K>;
+}
